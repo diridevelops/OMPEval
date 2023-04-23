@@ -1,8 +1,9 @@
 
-#include "omp/HandEvaluator.h"
-#include "omp/EquityCalculator.h"
-#include "omp/Random.h"
-#include "ttest/ttest.h"
+#include <HandEvaluator.h>
+#include <EquityCalculator.h>
+#include <Random.h>
+#include "wrapper/OMPEvalWrapper.h"
+#include "libraries/ttest/ttest.h"
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
@@ -380,6 +381,37 @@ class EquityCalculatorTest : public ttest::TestBase
     TTEST_CASE("test 6 - monte carlo") { monteCarloTest(TESTDATA[5]); }
 };
 
+class OMPEvalWrapperTest : public ttest::TestBase
+{
+    OMPEvalWrapper wrap;
+
+    TTEST_CASE("originalHandRanges() returns correct original ranges")
+    {
+        std::vector<std::vector<std::string>> realOriginalRanges = {
+            {"AsKs","AhKh","AcKc","AdKd"},
+            {"QhQs","QcQs","QcQh","QdQs","QdQh","QdQc"}
+        };
+
+        auto r = wrap.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resOriginalRanges = wrap.originalHandRanges();
+
+        TTEST_EQUAL(resOriginalRanges==realOriginalRanges, true);
+    }
+
+    TTEST_CASE("handRanges() returns correct ranges after card removal")
+    {
+        std::vector<std::vector<std::string>> realRanges = {
+            {"AcKc","AdKd"},
+            {"QhQs","QdQs","QdQh"}
+        };
+
+        auto r = wrap.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resRanges = wrap.handRanges();
+
+        TTEST_EQUAL(resRanges==realRanges, true);
+    }
+};
+
 void printBuildInfo()
 {
     cout << "=== Build information ===" << endl;
@@ -410,6 +442,8 @@ int main()
     HandEvaluatorTest().run();
     cout << "EquityCalculator:" << endl;
     EquityCalculatorTest().run();
+    cout << "OMPEvalWrapper:" << endl;
+    OMPEvalWrapperTest().run();
 
     cout << endl << endl << "=== Benchmarks ===" << endl;
     void benchmark();

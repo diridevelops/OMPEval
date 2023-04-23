@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <array>
 #include <cstdint>
+#include <functional>
 
 namespace omp {
 
@@ -28,14 +29,14 @@ public:
         // Number of players.
         unsigned players = 0;
         // Equity by player (between 0 and 1).
-        double equity[MAX_PLAYERS] = {};
+        std::array<double, MAX_PLAYERS> equity = {};
         // Wins by player.
-        uint64_t wins[MAX_PLAYERS] = {};
+        std::array<uint64_t, MAX_PLAYERS> wins = {};
         // Ties by player, adjusted for equity: 2-way splits = 1/2, 3-way = 1/3 etc..
-        double ties[MAX_PLAYERS] = {};
+        std::array<double, MAX_PLAYERS> ties = {};
         // Wins for each combination of winning players. Index ranges from 0 to 2^(n-1), where
         // bit 0 is player 1, bit 1 player 2 etc).
-        uint64_t winsByPlayerMask[1 << MAX_PLAYERS] = {};
+        std::array<uint64_t, 1 << MAX_PLAYERS> winsByPlayerMask = {};
         // Total hand count / hand count for last update period.
         uint64_t hands = 0, intervalHands = 0;
         // Total speed in hands/s / speed for last update period.
@@ -111,9 +112,15 @@ public:
     }
 
     // Hand ranges used in current calculation.
-    const std::vector<CardRange>& handRanges() const
+    const std::vector<CardRange>& originalHandRanges() const
     {
         return mOriginalHandRanges;
+    }
+
+    // Hand ranges after card removal.
+    const std::vector<std::vector<std::array<uint8_t,2>>>& handRanges() const
+    {
+        return mHandRanges;
     }
 
 private:

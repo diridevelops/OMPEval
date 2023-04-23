@@ -1,7 +1,7 @@
 
-#include "omp/Random.h"
-#include "omp/Hand.h"
-#include "omp/HandEvaluator.h"
+#include <Random.h>
+#include <Hand.h>
+#include <HandEvaluator.h>
 #include <iostream>
 #include <chrono>
 #include <vector>
