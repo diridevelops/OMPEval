@@ -1,7 +1,7 @@
 #include "OMPEvalWrapper.h"
 
 EquityCalculator::Results
-OMPEvalWrapper::calculateOdds(const std::vector<std::string> &handRanges, std::string boardCards, std::string deadCards,
+OMPEval::calculateOdds(const std::vector<std::string> &handRanges, std::string boardCards, std::string deadCards,
                        bool enumerateAll, double stdevTarget, double updateInterval, unsigned threadCount)
 {
     std::vector<CardRange> ranges = {};
@@ -18,7 +18,7 @@ OMPEvalWrapper::calculateOdds(const std::vector<std::string> &handRanges, std::s
 }
 
 std::string
-OMPEvalWrapper::combToString(std::array<uint8_t, 2> combination)
+OMPEval::combToString(std::array<uint8_t, 2> combination)
 {
     std::string hand = "";
     uint8_t suits[] = {0, 1, 2, 3};
@@ -36,7 +36,7 @@ OMPEvalWrapper::combToString(std::array<uint8_t, 2> combination)
 }
 
 std::vector<std::vector<std::string>>
-OMPEvalWrapper::originalHandRanges()
+OMPEval::originalHandRanges()
 {
     std::vector<std::vector<std::string>> rangesString;
     std::vector<std::string> rString = {};
@@ -54,7 +54,7 @@ OMPEvalWrapper::originalHandRanges()
 }
 
 std::vector<std::vector<std::string>>
-OMPEvalWrapper::handRanges()
+OMPEval::handRanges()
 {
     std::vector<std::vector<std::string>> rangesString;
     std::vector<std::string> rString = {};
@@ -71,7 +71,7 @@ OMPEvalWrapper::handRanges()
     return rangesString;
 }
 
-char OMPEvalWrapper::rankToChar(unsigned c)
+char OMPEval::rankToChar(unsigned c)
 {
     switch (c)
     {
@@ -106,7 +106,7 @@ char OMPEvalWrapper::rankToChar(unsigned c)
     }
 }
 
-char OMPEvalWrapper::suitToChar(unsigned c)
+char OMPEval::suitToChar(unsigned c)
 {
     switch (c)
     {

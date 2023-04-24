@@ -383,30 +383,36 @@ class EquityCalculatorTest : public ttest::TestBase
 
 class OMPEvalWrapperTest : public ttest::TestBase
 {
-    OMPEvalWrapper wrap;
+    OMPEval ev;
 
-    TTEST_CASE("originalHandRanges() returns correct original ranges")
+    TTEST_CASE("combToString() returns string of combination")
+    {
+        array<uint8_t, 2> hand = {49, 45};
+        TTEST_EQUAL(ev.combToString(hand), "AhKh");
+    }
+
+    TTEST_CASE("originalHandRanges() returns correct original combinations")
     {
         std::vector<std::vector<std::string>> realOriginalRanges = {
             {"AsKs","AhKh","AcKc","AdKd"},
             {"QhQs","QcQs","QcQh","QdQs","QdQh","QdQc"}
         };
 
-        auto r = wrap.calculateOdds({"AKs","QQ"},"AsKhQc");
-        auto resOriginalRanges = wrap.originalHandRanges();
+        auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resOriginalRanges = ev.originalHandRanges();
 
         TTEST_EQUAL(resOriginalRanges==realOriginalRanges, true);
     }
 
-    TTEST_CASE("handRanges() returns correct ranges after card removal")
+    TTEST_CASE("handRanges() returns correct combinations after card removal")
     {
         std::vector<std::vector<std::string>> realRanges = {
             {"AcKc","AdKd"},
             {"QhQs","QdQs","QdQh"}
         };
 
-        auto r = wrap.calculateOdds({"AKs","QQ"},"AsKhQc");
-        auto resRanges = wrap.handRanges();
+        auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resRanges = ev.handRanges();
 
         TTEST_EQUAL(resRanges==realRanges, true);
     }

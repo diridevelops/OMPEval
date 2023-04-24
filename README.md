@@ -18,7 +18,7 @@ Seq:    775  223   1588  80    716  134   1122  75    691  204   1544  69
 Rand1:  272  146   19    43    233  99    19    38    262  148   19    39      (Meval/s)
 Rand2:  520              87    466              62    529              72
 ```
-###Usage
+### Usage
 ```c++
 #include "omp/HandEvaluator.h"
 #include <iostream>
@@ -84,6 +84,42 @@ int main()
     cout << r.hands << " " << r.time << " " << 1e-6 * r.speed << " " << r.stdev << endl;
 }
 ```
+
+## Wrapper
+Facade for library functions with added functionality:
+- Calculate range vs range odds with a single function call.
+- Convert an internal range back to a human readable string.
+
+### Usage
+```c++
+OMPEval ev;
+
+/* range odds: args of calculateOdds() are the same of EquityCalculator::start() except callback.
+ */
+auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
+cout << endl << r.equity[0] << " " << r.equity[1] << endl;
+
+// ranges before card removal
+auto originalRanges = ev.originalHandRanges();
+for (auto h : originalRanges[0]) cout << h << " ";
+cout << endl;
+for (auto h : originalRanges[1]) cout << h << " ";
+cout << "\n" << endl;
+
+// ranges after card removal
+auto ranges = ev.handRanges();
+for (auto h : ranges[0]) cout << h << " ";
+cout << endl;
+for (auto h : ranges[1]) cout << h << " ";
+cout << endl;
+
+// print combinations from CardRange
+CardRange range("JJ+,AQs+");
+auto combos = range.combinations();
+for (auto c : combos) cout << ev.combToString(c) << " ";
+cout << endl;
+```
+
 
 ## Building
 To build a static library (`./build/libraries/omp`) on Unix systems, use `cmake`. To enable -msse4.1 switch, use `make SSE4=1`. For Windows there's currently no build files, so you will have to compile everything manually. The code has been tested with MSVC2013, TDM-GCC 5.1.0 and MinGW64 6.1, Clang 3.8.1 on Cygwin, and g++ 7.4.0 on Debian. See build commands below:
