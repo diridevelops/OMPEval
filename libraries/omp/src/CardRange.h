@@ -50,6 +50,9 @@ private:
     void addAll();
     void addCombos(unsigned rank1, unsigned rank2, bool suited, bool offsuited);
     void addCombosPlus(unsigned rank1, unsigned rank2, bool suited, bool offsuited);
+    void addCombosMinus(unsigned rank11, unsigned rank12,
+                        unsigned rank21, unsigned rank22,
+                        bool suited, bool offsuited);
     void addCombo(unsigned c1, unsigned c2);
     void removeDuplicates();
     static unsigned charToRank(char c);

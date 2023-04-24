@@ -103,6 +103,45 @@ bool CardRange::parseHand(const char*&p)
             offsuited = false;
         if (parseChar(p, '+'))
             addCombosPlus(r1, r2, suited, offsuited);
+        else if (parseChar(p, '-')) {
+            /* TODO: create a normalize function to convert stuff
+            like "QA-AT" to "AQs-ATs,AQo-ATo" */
+            unsigned tmp1 = r1;
+            unsigned tmp2 = r2;
+            if (!parseRank(p, r1)) {
+                p = backtrack;
+                return false;
+            }
+            if (!parseRank(p, r2)) {
+                p = backtrack;
+                return false;
+            }
+            if (tmp1 == tmp2) {
+                if (!suited || !offsuited || (r1 != r2)) {
+                    p = backtrack;
+                    return false;
+                }
+                if (parseChar(p, 's')|| parseChar(p, 'o')) {
+                    p = backtrack;
+                    return false;
+                }
+            }
+            else {
+                if (tmp1 != r1) {
+                    p = backtrack;
+                    return false;
+                }
+                if (!suited && parseChar(p, 's')) {
+                    p = backtrack;
+                    return false;
+                }
+                else if (!offsuited && parseChar(p, 'o')) {
+                    p = backtrack;
+                    return false;
+                }
+            }
+            addCombosMinus(tmp1, tmp2, r1, r2, suited, offsuited);
+        }
         else
             addCombos(r1, r2, suited, offsuited);
     }
@@ -169,6 +208,26 @@ void CardRange::addCombosPlus(unsigned rank1, unsigned rank2, bool suited, bool 
             std::swap(rank1, rank2);
         for (unsigned r = rank2; r < rank1; ++r)
             addCombos(rank1, r, suited, offsuited);
+    }
+}
+
+// Add ranges defined by "XX-YY" or "XVs-XWs".
+void CardRange::addCombosMinus(
+    unsigned rank11, unsigned rank12,
+    unsigned rank21, unsigned rank22,
+    bool suited, bool offsuited
+)
+{
+    if (rank11 == rank12){
+        if (rank11 < rank21)
+            std::swap(rank11, rank21);
+        for (unsigned r = rank21; r < rank11+1; ++r)
+            addCombos(r, r, false, true);
+    } else {
+        if (rank12 < rank22)
+            std::swap(rank12, rank22);
+        for (unsigned r = rank22; r < rank12+1; ++r)
+            addCombos(rank11, r, suited, offsuited);
     }
 }
 
