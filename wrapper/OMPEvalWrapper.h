@@ -25,10 +25,10 @@ public:
     std::string combToString(std::array<uint8_t, 2> combination);
 
     // Combinations before card removal.
-    std::vector<std::vector<std::string>> originalHandRanges();
+    std::vector<std::vector<std::string>> originalCombinations();
 
     // Combinations after card removal.
-    std::vector<std::vector<std::string>> handRanges();
+    std::vector<std::vector<std::string>> combinations();
 };
 
 #endif // OMP_EVALWRAPPER_H

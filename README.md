@@ -99,18 +99,18 @@ OMPEval ev;
 auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
 cout << endl << r.equity[0] << " " << r.equity[1] << endl;
 
-// ranges before card removal
-auto originalRanges = ev.originalHandRanges();
-for (auto h : originalRanges[0]) cout << h << " ";
+// combos before card removal
+auto originalCombos = ev.originalCombinations();
+for (auto h : originalCombos[0]) cout << h << " ";
 cout << endl;
-for (auto h : originalRanges[1]) cout << h << " ";
+for (auto h : originalCombos[1]) cout << h << " ";
 cout << "\n" << endl;
 
-// ranges after card removal
-auto ranges = ev.handRanges();
-for (auto h : ranges[0]) cout << h << " ";
+// combos after card removal
+auto combos = ev.combinations();
+for (auto h : combos[0]) cout << h << " ";
 cout << endl;
-for (auto h : ranges[1]) cout << h << " ";
+for (auto h : combos[1]) cout << h << " ";
 cout << endl;
 
 // print combinations from CardRange

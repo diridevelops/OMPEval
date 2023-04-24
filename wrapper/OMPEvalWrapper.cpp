@@ -36,7 +36,7 @@ OMPEval::combToString(std::array<uint8_t, 2> combination)
 }
 
 std::vector<std::vector<std::string>>
-OMPEval::originalHandRanges()
+OMPEval::originalCombinations()
 {
     std::vector<std::vector<std::string>> rangesString;
     std::vector<std::string> rString = {};
@@ -54,7 +54,7 @@ OMPEval::originalHandRanges()
 }
 
 std::vector<std::vector<std::string>>
-OMPEval::handRanges()
+OMPEval::combinations()
 {
     std::vector<std::vector<std::string>> rangesString;
     std::vector<std::string> rString = {};
