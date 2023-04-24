@@ -1,4 +1,25 @@
 #include "Wrapper.h"
+#include "Hand.h"
+
+Hand
+OMPEval::getHandFromBitmask(uint64_t cards)
+{
+    Hand hand = Hand::empty();
+    for (unsigned c = 0; c < CARD_COUNT; ++c)
+    {
+        if (cards & (1ull << c))
+            hand += c;
+    }
+    return hand;
+}
+
+uint16_t
+OMPEval::evaluateHand(std::string hand)
+{
+    auto mask = CardRange::getCardMask(hand);
+    auto h = OMPEval::getHandFromBitmask(mask);
+    return eval.evaluate(h);
+}
 
 EquityCalculator::Results
 OMPEval::calculateOdds(const std::vector<std::string> &handRanges, std::string boardCards, std::string deadCards,

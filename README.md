@@ -119,7 +119,7 @@ auto combos = range.combinations();
 for (auto c : combos) cout << ev.combToString(c) << " ";
 cout << endl;
 ```
-
+For more use cases look at `WrapperTest` in `./test.cpp`.
 
 ## Building
 To build a static library (`./build/libraries/omp`) on Unix systems, use `cmake`. To enable -msse4.1 switch, use `make SSE4=1`. For Windows there's currently no build files, so you will have to compile everything manually. The code has been tested with MSVC2013, TDM-GCC 5.1.0 and MinGW64 6.1, Clang 3.8.1 on Cygwin, and g++ 7.4.0 on Debian. See build commands below:

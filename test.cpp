@@ -381,14 +381,27 @@ class EquityCalculatorTest : public ttest::TestBase
     TTEST_CASE("test 6 - monte carlo") { monteCarloTest(TESTDATA[5]); }
 };
 
-class OMPEvalWrapperTest : public ttest::TestBase
+class WrapperTest : public ttest::TestBase
 {
-    OMPEval ev;
+    OMPEval omp;
+
+    TTEST_CASE("getHandFromBitmask() returns correct Hand")
+    {
+        uint64_t AhKhMask = 598134325510144;
+        Hand hand = Hand::empty();
+        hand += Hand(49) + Hand(45);
+        TTEST_EQUAL(OMPEval::getHandFromBitmask(AhKhMask)==hand, true);
+    }
+
+    TTEST_CASE("evaluateHand() returns eval from hand string")
+    {
+        TTEST_EQUAL(omp.evaluateHand("JsJh2s"), 10885);
+    }
 
     TTEST_CASE("combToString() returns string of combination")
     {
         array<uint8_t, 2> hand = {49, 45};
-        TTEST_EQUAL(ev.combToString(hand), "AhKh");
+        TTEST_EQUAL(omp.combToString(hand), "AhKh");
     }
 
     TTEST_CASE("originalCombinations() returns correct original combinations")
@@ -398,8 +411,8 @@ class OMPEvalWrapperTest : public ttest::TestBase
             {"QhQs","QcQs","QcQh","QdQs","QdQh","QdQc"}
         };
 
-        auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
-        auto resOriginalRanges = ev.originalCombinations();
+        auto r = omp.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resOriginalRanges = omp.originalCombinations();
 
         TTEST_EQUAL(resOriginalRanges==realOriginalRanges, true);
     }
@@ -411,8 +424,8 @@ class OMPEvalWrapperTest : public ttest::TestBase
             {"QhQs","QdQs","QdQh"}
         };
 
-        auto r = ev.calculateOdds({"AKs","QQ"},"AsKhQc");
-        auto resRanges = ev.combinations();
+        auto r = omp.calculateOdds({"AKs","QQ"},"AsKhQc");
+        auto resRanges = omp.combinations();
 
         TTEST_EQUAL(resRanges==realRanges, true);
     }
@@ -448,8 +461,8 @@ int main()
     HandEvaluatorTest().run();
     cout << "EquityCalculator:" << endl;
     EquityCalculatorTest().run();
-    cout << "OMPEvalWrapper:" << endl;
-    OMPEvalWrapperTest().run();
+    cout << "Wrapper:" << endl;
+    WrapperTest().run();
 
     cout << endl << endl << "=== Benchmarks ===" << endl;
     void benchmark();

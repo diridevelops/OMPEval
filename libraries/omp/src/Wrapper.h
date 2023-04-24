@@ -9,12 +9,17 @@ using namespace omp;
 class OMPEval
 {
 private:
+    HandEvaluator eval;
     EquityCalculator eq;
 
     char rankToChar(unsigned c);
     char suitToChar(unsigned c);
 
 public:
+    static Hand getHandFromBitmask(uint64_t cards);
+
+    uint16_t evaluateHand(std::string hand);
+
     // Calculate range vs range odds.
     EquityCalculator::Results calculateOdds(
         const std::vector<std::string> &handRanges, std::string boardCards = "", std::string deadCards = "",
