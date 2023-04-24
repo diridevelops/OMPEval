@@ -22,6 +22,7 @@ src/CardRange.cpp
 src/CombinedRange.cpp
 src/EquityCalculator.cpp
 src/HandEvaluator.cpp
+src/Wrapper.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -64,6 +65,7 @@ src/Constants.h
 src/Hand.h
 src/Random.h
 src/Util.h
+src/Wrapper.h
 include/libdivide/libdivide.h
 )
 # note that ${public_headers} has to be in quotes

@@ -1,4 +1,4 @@
-#include "OMPEvalWrapper.h"
+#include "Wrapper.h"
 
 EquityCalculator::Results
 OMPEval::calculateOdds(const std::vector<std::string> &handRanges, std::string boardCards, std::string deadCards,

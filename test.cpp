@@ -2,7 +2,7 @@
 #include <HandEvaluator.h>
 #include <EquityCalculator.h>
 #include <Random.h>
-#include "wrapper/OMPEvalWrapper.h"
+#include <Wrapper.h>
 #include "libraries/ttest/ttest.h"
 #include <iostream>
 #include <unordered_set>

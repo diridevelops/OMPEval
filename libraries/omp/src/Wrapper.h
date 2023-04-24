@@ -1,8 +1,8 @@
-#ifndef OMP_EVALWRAPPER_H
-#define OMP_EVALWRAPPER_H
+#ifndef OMP_WRAPPER_H
+#define OMP_WRAPPER_H
 
-#include <HandEvaluator.h>
-#include <EquityCalculator.h>
+#include "HandEvaluator.h"
+#include "EquityCalculator.h"
 
 using namespace omp;
 
@@ -31,4 +31,4 @@ public:
     std::vector<std::vector<std::string>> combinations();
 };
 
-#endif // OMP_EVALWRAPPER_H
+#endif // OMP_WRAPPER_H
