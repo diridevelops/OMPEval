@@ -3,7 +3,7 @@
 #include <EquityCalculator.h>
 #include <Random.h>
 #include <Wrapper.h>
-#include "libraries/ttest/ttest.h"
+#include "ttest/ttest.h"
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
