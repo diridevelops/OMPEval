@@ -139,6 +139,8 @@ bool CardRange::parseHand(const char*&p)
                     p = backtrack;
                     return false;
                 }
+                parseChar(p, 's');
+                parseChar(p, 'o');
             }
             addCombosMinus(tmp1, tmp2, r1, r2, suited, offsuited);
         }

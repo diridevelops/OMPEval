@@ -241,6 +241,36 @@ class HandEvaluatorTest : public ttest::TestBase
     }
 };
 
+class CardRangeTest : public ttest::TestBase
+{
+    TTEST_CASE("constructor all range")
+    {
+        CardRange c("random");
+        TTEST_EQUAL(c.combinations().size(), 1326);
+    }
+
+    TTEST_CASE("constructor from expression")
+    {
+        CardRange c("QQ,JJ,A9s+,QTs+,72s,A9o+,72o,9h6h,9h6s");
+        TTEST_EQUAL(c.combinations().size(), 118);
+    }
+
+    TTEST_CASE("addCombosMinus() parses XX-YY and XVs-XWs ranges")
+    {
+        CardRange c("QQ-TT,A9s-A7s,AsKs");
+        std::vector<std::array<uint8_t, 2>> expected = {
+            {33, 32}, {34, 32}, {34, 33}, {35, 32}, {35, 33}, {35, 34},
+            {37, 36}, {38, 36}, {38, 37}, {39, 36}, {39, 37}, {39, 38},
+            {41, 40}, {42, 40}, {42, 41}, {43, 40}, {43, 41}, {43, 42},
+            {48, 20}, {49, 21}, {50, 22}, {51, 23}, {48, 24}, {49, 25},
+            {50, 26}, {51, 27}, {48, 28}, {49, 29}, {50, 30}, {51, 31},
+            {48, 44} // presence of AsKs means that previos ranges have been parsed correctly
+        };
+        auto resCombos = c.combinations();
+        TTEST_EQUAL(resCombos==expected, true);
+    }
+};
+
 class EquityCalculatorTest : public ttest::TestBase
 {
     EquityCalculator eq;
@@ -459,6 +489,8 @@ int main()
     HandTest().run();
     cout << "HandEvaluator:" << endl;
     HandEvaluatorTest().run();
+    cout << "CardRange:" << endl;
+    CardRangeTest().run();
     cout << "EquityCalculator:" << endl;
     EquityCalculatorTest().run();
     cout << "Wrapper:" << endl;
